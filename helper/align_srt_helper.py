@@ -181,22 +181,27 @@ def read_and_align_srt(rawSentenceList, ending):
 
 # srt 파일에 마침표가 있는지 체크
 def check_ending(sentenceList:list, ending='.') -> bool:
-    # check unable parsing : 마침표가 없으면 파싱할 수 없다
-    l = []
+    # 마침표가 없으면 파싱할 수 없다
+    l = ''
     for sentence in sentenceList:
         # 공백 줄인 경우:
+        # print('empty line')
         if sentence.strip('\n') == '':      # if empty line then True
             continue
 
         # identifier 표시줄인 경우:
+        # print('identifier line')
         if sentence.strip('\n').isdigit():  # if identifier line then True
             continue
 
         # 타임코드 표시줄인 경우:
+        # print('time line')                   # if time line then True
         if '-->' in sentence:               # if time line then True
             continue
 
-        l = l + sentence
+        # concat list
+        # print('concat list')
+        l = l + sentence                    # concat list
 
     if not f'{ending} ' in l or not f'{ending}\n' in l:
         print('#################### not period, exit')
@@ -208,7 +213,6 @@ def align_srt(srtFile: str, save:bool, _ending='.') -> tuple:
     rawSentenceList = []    # 읽어 온 srt 파일
     sentenceList = []       # 정리 과정에 사용할 문장리스트
     ending = _ending        # 종결 문자
-
 
     #########################################################
     ###  파일 안의 문장을 읽어서 리스트에 담는다
@@ -223,10 +227,9 @@ def align_srt(srtFile: str, save:bool, _ending='.') -> tuple:
             readLine = f.readline()
             rawSentenceList.append(readLine)
 
-        # srt 파일에 마침표가 있는지 확인
-        if not check_ending(rawSentenceList):
-            return False, 0, [], [], []
-
+    # srt 파일에 마침표가 있는지 확인
+    if not check_ending(rawSentenceList):
+        return False, 0, [], [], []
 
     #############################################################
     ###  라인을 읽어서 마침표 단위로 정리
@@ -274,5 +277,5 @@ def align_srt(srtFile: str, save:bool, _ending='.') -> tuple:
 
 
 if __name__ == '__main__':
-    srtFile = u"..\\4. Demo - Docker containers.srt"
+    srtFile = u"D:\\Tutorials\\test_sample"
     align_srt(srtFile, save=True)

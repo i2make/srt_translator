@@ -73,7 +73,7 @@ def translate_ko(fileList: list):
 
 if __name__ == '__main__':
 
-    path = u"D:\\Tutorials\\JS\\Remake Retro Games with JavaScript"
+    path = u"D:\\Tutorials\\test_sample"
 
     fileList = scan_path(path, '.srt', '_ko.srt')
 
