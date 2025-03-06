@@ -5,11 +5,8 @@
 # import library
 import time
 from selenium import webdriver
-from selenium.webdriver.edge.service import Service
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-# from helper.align_srt_helper import align_srt
-from helper.align_srt_helper2 import align_srt
+from helper.align_srt_helper import align_srt
 from helper.time_change_helper import millisecondsToTime
 from helper.scan_path_helper import scan_path
 
