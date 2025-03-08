@@ -53,7 +53,7 @@ def translate_ko(fileList: list):
 
                 # append list
                 translatedSentenceList.append(readText)
-        
+         
             #########################
             ### write new srt file
             #########################
@@ -64,8 +64,9 @@ def translate_ko(fileList: list):
                     f.write(millisecondsToTime(int(j)) + ' --> ' + \
                             millisecondsToTime(int(k)) + '\n')          # time
                     f.write(l + '\n\n')                                 # sentence
-                # 저장 완료 메시지 출력
-                print(f'{newSrtFile}가 저장되었음.')
+            # 저장 완료 메시지 출력
+            print(f'{newSrtFile}가 저장되었음.')
+
         except:
             print('에러 발생, 다음 파일로 이동')
             continue

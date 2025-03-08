@@ -5,9 +5,10 @@
 # 임포트
 import re
 from helper.time_change_helper import timeToMilliseconds, millisecondsToTime
+# from time_change_helper import timeToMilliseconds, millisecondsToTime
 
 # 변수
-# 문장 종결 문자
+# 문장 종결 문자 (TODO)
 # sentenceEndings = ['.', '!', '?']
 # ending = '.'
 
@@ -203,10 +204,11 @@ def check_ending(sentenceList:list, ending='.') -> bool:
         # print('concat list')
         l = l + sentence                    # concat list
 
-    if not f'{ending} ' in l or not f'{ending}\n' in l:
+    if f'{ending} ' in l or f'{ending}\n' in l:
+        return True
+    else:
         print('#################### not period, exit')
         return False
-    return True
 
 # srt 파일을 문장 단위로 정리하는 함수
 def align_srt(srtFile: str, save:bool, _ending='.') -> tuple:
@@ -227,19 +229,14 @@ def align_srt(srtFile: str, save:bool, _ending='.') -> tuple:
             readLine = f.readline()
             rawSentenceList.append(readLine)
 
-    # srt 파일에 마침표가 있는지 확인
+    # srt 파일에 마침표가 있는지 확인하고 없으면 스킵
     if not check_ending(rawSentenceList):
-        return False, 0, [], [], []
+        return '', 0, [], [], []
 
     #############################################################
     ###  라인을 읽어서 마침표 단위로 정리
     #############################################################
     sentenceList = read_and_align_srt(rawSentenceList, ending)
-
-    # print(f'총 개수: {len(sentenceList)}')
-    # for i in range(len(sentenceList)):
-    #     print(sentenceList[i], '\n')
-    # exit(1)
 
     ##################################################################
     # 문장을 연결하고 정리
@@ -260,12 +257,6 @@ def align_srt(srtFile: str, save:bool, _ending='.') -> tuple:
     for i in range(len(finalSentenceList)):
         finalSentenceList[i] = clean_spaces(finalSentenceList[i])  # 스페이스 클리어
 
-    # 테스트 인쇄
-    # for i in range(len(finalSentenceList)):
-    #     # print(f'{startTimeList[i]} - {endTimeList[i]}: {finalSentenceList[i]}\n')
-    #     print(f'{millisecondsToTime(int(startTimeList[i]))} - {millisecondsToTime(int(endTimeList[i]))}: {finalSentenceList[i]}\n')
-    # exit(1)
-
     ########################################################################
     # 파일 이름 설정 및 저장
     ########################################################################
@@ -277,5 +268,5 @@ def align_srt(srtFile: str, save:bool, _ending='.') -> tuple:
 
 
 if __name__ == '__main__':
-    srtFile = u"D:\\Tutorials\\test_sample"
+    srtFile = u"D:\\Tutorials\\test_sample\\1. Docker Introduction.srt"
     align_srt(srtFile, save=True)
